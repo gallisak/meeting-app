@@ -40,7 +40,7 @@ export const Dashboard = () => {
 
         setRooms(roomsList);
       } catch (error) {
-        console.error("Помилка при завантаженні кімнат:", error);
+        console.error("Error loading rooms:", error);
       } finally {
         setLoading(false);
       }
@@ -53,14 +53,17 @@ export const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
         <header className="flex justify-between items-center mb-8 bg-white p-4 rounded-lg shadow-sm">
-          {user.role === "admin" && (
-            <Link
-              to="/create-room"
-              className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition font-medium mr-4"
-            >
-              + Add Room
-            </Link>
-          )}
+          <div className="hidden lg:block">
+            {user.role === "admin" && (
+              <Link
+                to="/create-room"
+                className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition font-medium mr-4"
+              >
+                + Add Room
+              </Link>
+            )}
+          </div>
+
           <Link
             to="/my-bookings"
             className="text-blue-600 hover:text-blue-800 font-medium mr-4"
@@ -70,8 +73,12 @@ export const Dashboard = () => {
           <h1 className="text-2xl font-bold text-gray-800">Booking App</h1>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <div className="font-medium text-gray-900">{user.email}</div>
-              <div className="text-xs text-gray-500 uppercase">{user.role}</div>
+              <div className="font-medium hidden lg:block text-gray-900">
+                {user.email}
+              </div>
+              <div className="text-xs text-gray-500 hidden lg:block uppercase">
+                {user.role}
+              </div>
             </div>
             <button
               onClick={handleLogout}
@@ -81,13 +88,23 @@ export const Dashboard = () => {
             </button>
           </div>
         </header>
+        <div className="block lg:hidden mb-5">
+          {user.role === "admin" && (
+            <Link
+              to="/create-room"
+              className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition font-medium mr-4"
+            >
+              + Add Room
+            </Link>
+          )}
+        </div>
 
         <h2 className="text-xl font-bold mb-6 text-gray-700">
           Available Rooms
         </h2>
 
         {loading ? (
-          <p className="text-center text-gray-500">Завантажую кімнати...</p>
+          <p className="text-center text-gray-500">Loading rooms...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rooms.map((room) => (
