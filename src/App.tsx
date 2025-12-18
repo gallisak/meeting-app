@@ -8,6 +8,8 @@ import { setUser, logout } from "./app/features/userSlice";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Dashboard } from "./pages/Dashboard";
+import { RoomPage } from "./pages/RoomPage";
+import { MyBookings } from "./pages/MyBookings";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -42,6 +44,14 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/room/:id"
+          element={isAuthenticated ? <RoomPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/my-bookings"
+          element={isAuthenticated ? <MyBookings /> : <Navigate to="/login" />}
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
