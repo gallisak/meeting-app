@@ -53,6 +53,14 @@ export const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
         <header className="flex justify-between items-center mb-8 bg-white p-4 rounded-lg shadow-sm">
+          {user.role === "admin" && (
+            <Link
+              to="/create-room"
+              className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition font-medium mr-4"
+            >
+              + Add Room
+            </Link>
+          )}
           <Link
             to="/my-bookings"
             className="text-blue-600 hover:text-blue-800 font-medium mr-4"
